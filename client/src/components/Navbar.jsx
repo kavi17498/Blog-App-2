@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../context/authContext';
+import { logout } from '../../../api/controllers/auth';
 
 function Navbar() {
+  const {currentUser} = useContext(AuthContext);
   return (
     <div className='navbar'>
       <div className='container'>
@@ -16,8 +19,10 @@ function Navbar() {
         <Link to="/?cat=design" className='link'><h6>design</h6></Link>
         <Link to="/?cat=food" className='link'><h6>food</h6></Link>
       
-      <span>Jhon</span>
-      <span>Logout</span>
+      <span>{currentUser?.username}</span>
+      {currentUser?  
+      <span onClick={logout}>Logout</span>
+      : <Link className='link' to='/login'>Login</Link> }
       <span className='write'>
         <Link className='links' to="write">Write</Link>
       </span>
